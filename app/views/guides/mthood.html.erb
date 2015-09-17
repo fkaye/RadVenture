@@ -1,0 +1,108 @@
+<!-- Page Content -->
+<div class="container">
+
+  <!-- Page Heading/Breadcrumbs -->
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+        Mt. Hood
+      </h1>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <!-- Portfolio Item Row -->
+  <div class="row">
+
+    <div class="col-md-8" style="padding-top:25px">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          <div class="item active">
+            <%= image_tag 'mthood.jpg', class: 'img-responsive' %>
+          </div>
+          <div class="item">
+            <%= image_tag 'mthood2.jpg', class: 'img-responsive' %>
+          </div>
+          <div class="item">
+            <%= image_tag 'mthood3.jpg', class: 'img-responsive' %>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Location Description</h3>
+      <p>Mt. Hood Meadows offers some of the most spectacular skiing and snowboarding in the Northwest! The resort is close to Portland - just 90 minutes away - but delivers a big mountain experience you'd expect to travel much farther to enjoy. Mt. Hood Meadows Ski Resort operates on a special use permit on the Mt. Hood National Forest, and the resort sprawls across Mt. Hood's southeast flank, the sunny, wind-protected side of Mt. Hood. Meadows' playful terrain welcomes and challenges all levels of skiers and snowboarders. We have a huge mountain with terrain for everyone, magnificent views and snowfall beyond belief. Our entire staff is committed to providing you with a truly memorable and unique experience that is Mt. Hood Meadows.</p>
+      <br>
+      <p>This is a big mountain experience, with enough acreage to keep you busy for days and enough character so you will respect and remember your time on these trails. "It's so much bigger than what I thought," is a common reaction of those hitting the slopes for the first time, knowing that they'll need to come back several times before they fully experience all Meadows has to offer.</p>
+    </div>
+
+  </div>
+  <!-- /.row -->
+
+  <!-- Related Projects Row -->
+  <div class="row">
+
+    <div class="col-lg-12">
+      <h3 class="page-header">Top Guides for Mt. Hood
+        <%= link_to 'More Guides', index_path(location: 'Mount Hood'), class: "btn btn-default" %>
+      </h3>
+
+    </div>
+
+    <% top_guides = top_guides(hood_guides) %>
+
+    <% top_guides.each do |guide| %>
+      <% if !guide.nil? %>
+        <div class="col-md-4 col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <%= image_tag Gravatar.new(guide.user.email).image_url(:d => :mm), class: 'img img-circle img-portfolio img-hover',
+                            style: 'height:200px; width:325px; margin-bottom: 0px;' %>
+              <h4><%= link_to guide.user.name, guide %></h4>
+              <!-- <img class="img-responsive img-hover img-related" src="../img/guide-n-location/guide1.jpg" alt=""> -->
+              <h4>Sports: <%= sports_string(guide.downhill, guide.crosscountry, guide.snowboard) %></h4>
+              <h4>Rate: <%= number_to_currency(guide.rate) %>/Hour</h4>
+              <h4>Rating: <% stars = guide.reviews.average(:rating).round %>
+                <% stars.times do |i| %>
+                  <span class="fa fa-star"></span>
+                <% end %>
+                <% (5 - stars).times do |i| %>
+                  <span class="fa fa-star-o"></span>
+                <% end %>
+              </h4>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <!-- /.row -->
+
+  <hr>
+
+</div>
+<!-- /.container -->
+
+<!-- jQuery -->
+<script src="../js/jquery.js"></script>
+<!-- Tracking -->
+<script src="//cdn.optimizely.com/js/2718120061.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="../js/bootstrap.min.js"></script>
+</div>

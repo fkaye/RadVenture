@@ -1,0 +1,19 @@
+Dear <%= @msg.name %>,
+
+<% case %>
+<% when @msg.subject.match("Question") && !@msg.recipient_name.match("user") %>
+  Here is a copy of the message:
+<% else %>
+  We have received your message. Thank you for reaching out to us. Our team will respond to you as soon as possible.
+<% end %>
+
+Message Receipt:
+<% time = Time.now %>
+
+Sent: <%= time.strftime("%A, %B %d, %Y @ %H:%M:%S")%>
+Subject: <%= @msg.subject %>
+Message: <%= @msg.content %>
+
+----------
+Thank you,
+Radventure Team

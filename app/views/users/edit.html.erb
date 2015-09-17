@@ -1,0 +1,144 @@
+<% provide(:title, 'Account Settings') %>
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header" style="text-align:center">Account Settings</h1>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Alignment -->
+  <div class="col-sm-offset-4 col-sm-6 col-lg-4 well well-sm">
+    <legend>Settings</legend>
+        <% if is_guide? %>
+            <p>Already a guide?
+            <%= link_to "Edit Guide Profile", edit_guide_url(id: current_guide.id),  class: "btn btn-primary btn-sm pull-right"%>
+            </p>
+            <br><br>
+        <% else %>
+            <p>Want to be a guide?
+            <%= link_to "Become a guide", new_guide_url(id: current_user.id),  class: "btn btn-primary btn-sm pull-right"%>
+            <br><br>
+            </p>
+        <% end %>
+
+        <p>Want to change your password?
+        <%= link_to "Change password", change_password_url(id: current_user.id),  class: "btn btn-primary btn-sm pull-right"%>
+        </p>
+        <br>
+        <p>Want to view your transactions?
+        <%= link_to "View Transactions", transactions_path , class: "btn btn-primary btn-sm pull-right"%>
+        </p>
+        <br><br>
+
+        <legend>Account Information</legend>
+        <%= form_for(@user) do |formElement| %>
+            <form class='well well-sm'>
+              <%= render 'shared/user_error_messages' %>
+
+              <div class="control-group">
+                <div class="controls text-center">
+                    <%= formElement.label :name  %>
+                    <%= formElement.text_field :name , class:'form-control text-center' %>
+                </div>
+              </div>
+              <br>
+
+              <div class="control-group">
+                <div class="controls text-center">
+                    <%= formElement.label :email %>
+                    <%= formElement.email_field :email, class:'form-control text-center'  %>
+                </div>
+              </div>
+              <br>
+
+              <div class="control-group">
+                <div class="controls text-center">
+                    <%= formElement.label :phone_number, class: 'control-label' %>
+                    <%= formElement.text_field :phone_number , class:'form-control text-center'  %>
+                </div>
+              </div>
+              <br>
+
+              <div class="control-group">
+                <div class="controls text-center">
+                   <%= formElement.label :age, class: 'control-label' %>
+                   <%= formElement.text_field :age , class:'form-control text-center'  %>
+                </div>
+              </div>
+              <br>
+
+              <div class="control-group">
+                <div class="controls text-center">
+                   <%= formElement.label :address, class: 'control-label' %>
+                   <%= formElement.text_field :address, class:'form-control text-center'  %>
+                </div>
+              </div>
+              <br>
+
+              <div class="control-group">
+                <div class="controls text-center">
+                  <%= formElement.label :city, class: 'control-label' %>
+                  <%= formElement.text_field :city , class:'form-control text-center' %>
+                </div>
+              </div>
+              <br>
+
+              <div class="control-group">
+                <div class="controls text-center">
+                  <%= formElement.label :zipcode, 'ZIP code', class: 'control-label' %>
+                  <%= formElement.text_field :zipcode , class:'form-control text-center' %>
+                </div>
+              </div>
+              <br>
+
+              <div class="control-group">
+                <div class="controls text-center">
+                  <%= formElement.label :country, class: 'control-label' %>
+                  <br>
+                  <%= formElement.select(:country, options_for_select(countries, current_user.country)) %>
+                </div>
+              </div>
+              <br>
+
+              <div class="control-group", id = 'state_control'>
+                <div class="controls text-center">
+                  <%= formElement.label :state, class: 'control-label' %>
+                  <br>
+                  <% if current_user.state == 'None' %>
+                    <%= formElement.select(:state, options_for_select(us_states)) %>
+                  <% else %>
+                    <%= formElement.select(:state, options_for_select(us_states, current_user.state)) %>
+                  <% end %>
+                </div>
+                <br>
+              </div>
+
+
+              <div class='form-group text-center'>
+                <%= formElement.submit 'Save changes', class: 'btn btn-success'%>
+              </div>
+
+            </form>
+        <% end %>
+  </div>
+</div>
+
+<script>
+    var country_start = $('#user_country :selected').val();
+    if(country_start != 'United States of America') {
+        $('#state_control').hide();
+    } else {
+        $('#state_control').show();
+    }
+    // when the country field changes
+    $("#user_country").change(function() {
+        var country = $('#user_country :selected').val();
+        if(country != 'United States of America') {
+            $('#state_control').hide();
+        } else {
+            $('#state_control').show();
+        }
+    });
+</script>
+<!-- Tracking -->
+<script src="//cdn.optimizely.com/js/2718120061.js"></script>

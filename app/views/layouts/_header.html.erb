@@ -1,0 +1,99 @@
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">RADVENTURE</a>
+    </div>
+
+    <div class="collapse navbar-collapse nav navbar-nav navbar-right" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+
+        <li><%= link_to "About", about_path %></li>
+        <li><%= link_to "Contact", contact_path %></li>
+        <li><%= link_to "Search", search_path %></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Location<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "All Locations", locations_path %></li>
+            <li><%= link_to "Mt. Hood", mthood_path %></li>
+            <li><%= link_to "Mt. Bachelor", mtbachelor_path %></li>
+            <li><%= link_to "Mt. Whistler", mtwhistler_path %></li>
+          </ul>
+        </li>
+
+     <!--   <li><a href="search.html">Quick Search</a></li> -->
+
+        <% if logged_in? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                 role="button" aria-expanded="false">Account
+                <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" role="menu">
+                <% if is_guide? %>
+                  <li><%= link_to "Profile", current_guide %></li>
+                  <li><%= link_to "Update Profile", edit_guide_path(current_guide) %></li>
+                <% end %>
+                <li><%= link_to "Account Settings", edit_user_path(current_user) %></li>
+                <li><%= link_to "Change Password", change_password_url(current_user.id) %></li>
+
+                <li class="divider"></li>
+                <li><%= link_to "Log out", logout_path, method: "delete" %></li>
+              </ul>
+            </li>
+
+        <% else %>
+            <li>
+              <button type="button" class="btn btn-md navbar-btn" data-toggle="modal" data-target="#LogIn" style="margin-left:15px">
+                Log in
+              </button>
+            </li>
+            <li>
+              <%= button_to "Sign up", signup_path, class: 'btn btn-md navbar-btn', style: 'margin-left:15px', method: 'get' %>
+            </li>
+        <% end %>
+
+        <div class="modal fade" id="LogIn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index:99999999999">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="LogInModal">Login</h4>
+              </div>
+              <div class="modal-body">
+                <%= form_for(:session, url: login_path) do |formElement| %>
+                    <form>
+                      <!--%= render 'shared/error_messages' %-->
+
+                      <div class='form-group'>
+                        <%= formElement.label :Email %>
+                        <%= formElement.email_field :email,  class: 'form-control', id: 'Username', placeholder: 'radventureit@gmail.com' %>
+                      </div>
+
+                      <div class='form-group'>
+                        <%= formElement.label :password%>
+                        <%= formElement.password_field :password, class: 'form-control', id: 'Password', placeholder: 'Password' %>
+                      </div>
+                      <div class='form-group'>
+                        <%= formElement.submit "Submit", class: 'btn btn-default' %>
+                      </div>
+
+                    </form>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </ul>
+    </div> <!-- /.navbar-collapse -->
+  </div> <!-- /.container -->
+</nav>

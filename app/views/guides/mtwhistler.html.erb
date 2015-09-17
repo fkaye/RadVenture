@@ -1,0 +1,105 @@
+<!-- Page Content -->
+<div class="container">
+
+  <!-- Page Heading/Breadcrumbs -->
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">
+        Mt. Whistler
+      </h1>
+    </div>
+  </div>
+  <!-- /.row -->
+
+  <!-- Portfolio Item Row -->
+  <div class="row">
+
+    <div class="col-md-8" style="padding-top:25px">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          <div class="item active">
+            <%= image_tag 'mtwhistler.jpg', class: 'img-responsive' %>
+          </div>
+          <div class="item">
+            <%= image_tag 'whistler2.jpeg', class: 'img-responsive' %>
+          </div>
+          <div class="item">
+            <%= image_tag 'whistler3.jpg', class: 'img-responsive' %>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h3>Location Description</h3>
+      <p>Every year, thousands of skiers and boarders journey to the Westcoast for an unrivalled ski vacation in Whistler Blackcomb. They’re drawn by over 8100 skiable acres, a bustling pedestrian base village packed with shopping and dining choices, and a fantastic array of winter adventures.
+        Last season was one of our best ever, with record-breaking snow. Take advantage of these great deals and help us make the 2014-15 season even better.</p>
+
+    </div>
+
+  </div>
+  <!-- /.row -->
+
+  <!-- Related Projects Row -->
+  <div class="row">
+
+    <div class="col-lg-12">
+      <h3 class="page-header">Top Guides for Mt. Whistler
+        <%= link_to 'More Guides', index_path(location: 'Whistler'), class: "btn btn-default" %>
+      </h3>
+    </div>
+
+    <% top_guides = top_guides(whistler_guides) %>
+
+    <% top_guides.each do |guide| %>
+      <% if !guide.nil? %>
+        <div class="col-md-4 col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <%= image_tag Gravatar.new(guide.user.email).image_url(:d => :mm), class: 'img img-circle img-portfolio img-hover',
+                            style: 'height:200px; width:325px; margin-bottom: 0px;' %>
+              <h4><%= link_to guide.user.name, guide %></h4>
+              <!-- <img class="img-responsive img-hover img-related" src="../img/guide-n-location/guide1.jpg" alt=""> -->
+              <h4>Sports: <%= sports_string(guide.downhill, guide.crosscountry, guide.snowboard) %></h4>
+              <h4>Rate: <%= number_to_currency(guide.rate) %>/Hour</h4>
+              <h4>Rating: <% stars = guide.reviews.average(:rating).round %>
+                <% stars.times do |i| %>
+                  <span class="fa fa-star"></span>
+                <% end %>
+                <% (5 - stars).times do |i| %>
+                  <span class="fa fa-star-o"></span>
+                <% end %>
+              </h4>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <!-- /.row -->
+
+  <hr>
+</div>
+<!-- /.container -->
+</div>
+<!-- jQuery -->
+<script src="../js/jquery.js"></script>
+<!-- Tracking -->
+<script src="//cdn.optimizely.com/js/2718120061.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="../js/bootstrap.min.js"></script>
